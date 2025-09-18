@@ -1,0 +1,14 @@
+{
+  "name": "tp-modulo2-fundamentos-js",
+  "version": "1.0.0",
+  "description": "trabajo práctico sobre un sistema de gestión de biblioteca",
+  "main": "trabajoPracticoIntegrador_BorgesFran.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "borges-fran",
+  "license": "ISC",
+  "dependencies": {
+    "prompt-sync": "^4.2.0"
+  }
+}
