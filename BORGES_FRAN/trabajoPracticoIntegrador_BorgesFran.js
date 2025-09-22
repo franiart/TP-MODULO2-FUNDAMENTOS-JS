@@ -236,24 +236,31 @@ a) Implementar una función registrarUsuario(nombre, email) que
 agregue un nuevo usuario al array usuarios.
 
 ➝ Crea un nuevo usuario y lo agrega al array global "usuarios".
-➝ Por ahora solo guarda nombre y email (podría ampliarse con más datos en el futuro).
-➝ Se utiliza la sintaxis abreviada de objetos {nombre, email}, que es equivalente a { nombre: nombre, email: email }.
+➝ Muestra un mensaje en consola confirmando la acción.
 */
-
 const registrarUsuario = (nombre, email) => usuarios.push({nombre, email});
 /*
 b) Implementar una función mostrarTodosLosUsuarios() que me
 devuelva el array completo de usuarios
+➝ Devuelve el array completo de usuarios registrados.
+
 */
 const mostrarTodosLosUsuarios = () => usuarios;
 /*
 c) Crear una función buscarUsuario(email) que devuelva la información
 de un usuario dado su email.
+➝ Busca en el array de usuarios un usuario específico mediante su email.
+➝ Utiliza .find(), que devuelve el primer elemento que cumpla la condición.
+➝ Si no encuentra coincidencia, devuelve "undefined".
 */
 const buscarUsuario = (email) => usuarios.find(usuario => usuario.email === email);
 /*
 d) Implementar una función borrarUsuario(nombre, email) que elimine el
 usuario seleccionado.
+➝ Elimina un usuario específico según su nombre y email.
+➝ Se usa findIndex() para obtener la posición del usuario en el array.
+➝ Si se encuentra, se elimina con splice().
+➝ Si no existe, muestra un mensaje de advertencia en consola.
 */
 const borrarUsuario = (nombre, email) => {
     const index = usuarios.findIndex(usuario => usuario.nombre === nombre && usuario.email === email);
@@ -265,3 +272,84 @@ const borrarUsuario = (nombre, email) => {
     }
 }
 
+/*
+------------------------------
+SISTEMA DE PRÉSTAMOS
+------------------------------
+*/
+
+/*
+a) Desarrollar una función prestarLibro(idLibro, idUsuario) que marque
+un libro como no disponible y lo agregue a la lista de libros prestados
+del usuario.
+➝ Esta función permite prestar un libro a un usuario.
+    ➝ Pasos:
+        1. Busca el libro en el array "libros" usando su id.
+        2. Busca el usuario en el array "usuarios" usando su id.
+        3. Si ambos existen:
+            - Verifica que el libro esté disponible.
+            - Si está disponible:
+                • Cambia "disponible" a false (ya no se puede prestar a otro).
+                • Agrega el id del libro al array "librosPrestados" del usuario.
+                • Muestra un mensaje confirmando el préstamo.
+            - Si NO está disponible:
+                • Muestra un mensaje indicando que no se puede prestar.
+        4. Si no encuentra el libro o el usuario:
+            • Muestra un mensaje de error.
+*/
+
+const prestarLibro = (idLibro, idUsuario) => {
+    const libro = libros.find(libro => libro.id === idLibro);
+    const usuario = usuarios.find(usuario => usuario.id === idUsuario);
+    if (libro && usuario) {
+        if (libro.disponible) {
+            libro.disponible = false; // Marcar el libro como no disponible 
+            usuario.librosPrestados.push(idLibro); // Agregar el ID del libro a la lista de libros prestados del usuario
+            console.log(`El libro "${libro.titulo}" ha sido prestado a ${usuario.nombre}`);
+        } else {
+            console.log(`El libro "${libro.titulo}" no está disponible para préstamo`);
+        }
+    } else {
+        console.log("Libro o usuario no encontrado");
+    }
+}
+
+/*
+b) Implementar una función devolverLibro(idLibro, idUsuario) que
+marque un libro como disponible y lo elimine de la lista de libros
+prestados del usuario.
+➝ Esta función permite devolver un libro a la biblioteca.
+    ➝ Pasos:
+        1. Busca el libro y el usuario en sus respectivos arrays por id.
+        2. Si ambos existen:
+            - Verifica que el libro esté marcado como "no disponible".
+            - Si está prestado:
+                • Cambia "disponible" a true (vuelve a estar en la biblioteca).
+                • Busca el índice del idLibro en "librosPrestados" del usuario.
+                • Si lo encuentra, lo elimina con splice().
+                • Muestra un mensaje confirmando la devolución.
+                • Si no lo encuentra, indica que ese usuario no tenía ese libro.
+            - Si el libro ya estaba disponible, muestra un aviso.
+        3. Si no encuentra libro o usuario, muestra un error.
+*/
+
+const devolverLibro = (idLibro, idUsuario) => {
+    const libro = libros.find(libro => libro.id === idLibro);
+    const usuario = usuarios.find(usuario => usuario.id === idUsuario);
+    if (libro && usuario) {
+        if (!libro.disponible) {
+            libro.disponible = true; // Marcar el libro como disponible
+            const index = usuario.librosPrestados.indexOf(idLibro);
+            if (index !== -1) {
+                usuario.librosPrestados.splice(index, 1); // Eliminar el ID del libro de la lista de libros prestados del usuario
+                console.log(`El libro "${libro.titulo}" ha sido devuelto por ${usuario.nombre}`);
+            } else {
+                console.log(`${usuario.nombre} no tiene prestado el libro "${libro.titulo}"`);
+            }
+        } else {
+            console.log(`El libro "${libro.titulo}" ya está disponible en la biblioteca`);
+        }
+    } else {
+        console.log("Libro o usuario no encontrado");
+    }
+}
