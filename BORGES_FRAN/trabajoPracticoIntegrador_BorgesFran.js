@@ -224,3 +224,44 @@ const borrarLibro = (id) => {
         console.log(`No se encontró un libro con ID ${id}`);
     }   
 }
+
+/* 
+------------------------------
+GESTIÓN DE USUARIOS
+------------------------------
+*/
+
+/*
+a) Implementar una función registrarUsuario(nombre, email) que
+agregue un nuevo usuario al array usuarios.
+
+➝ Crea un nuevo usuario y lo agrega al array global "usuarios".
+➝ Por ahora solo guarda nombre y email (podría ampliarse con más datos en el futuro).
+➝ Se utiliza la sintaxis abreviada de objetos {nombre, email}, que es equivalente a { nombre: nombre, email: email }.
+*/
+
+const registrarUsuario = (nombre, email) => usuarios.push({nombre, email});
+/*
+b) Implementar una función mostrarTodosLosUsuarios() que me
+devuelva el array completo de usuarios
+*/
+const mostrarTodosLosUsuarios = () => usuarios;
+/*
+c) Crear una función buscarUsuario(email) que devuelva la información
+de un usuario dado su email.
+*/
+const buscarUsuario = (email) => usuarios.find(usuario => usuario.email === email);
+/*
+d) Implementar una función borrarUsuario(nombre, email) que elimine el
+usuario seleccionado.
+*/
+const borrarUsuario = (nombre, email) => {
+    const index = usuarios.findIndex(usuario => usuario.nombre === nombre && usuario.email === email);
+    if (index !== -1) {
+        usuarios.splice(index, 1);
+        console.log(`El usuario ${nombre} fue eliminado exitosamente`);
+    } else {
+        console.log(`No se encontró un usuario con nombre ${nombre} y email ${email}`);
+    }
+}
+
