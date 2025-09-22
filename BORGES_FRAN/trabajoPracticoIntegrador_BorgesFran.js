@@ -353,3 +353,41 @@ const devolverLibro = (idLibro, idUsuario) => {
         console.log("Libro o usuario no encontrado");
     }
 }
+
+
+/*
+------------------------------
+REPORTES
+------------------------------
+
+a) Crear una función generarReporteLibros() que utilice métodos
+avanzados de arrays (.map(), .filter(), .reduce()) para generar un
+reporte con la siguiente información:
+✓ Cantidad total de libros.
+✓ Cantidad de libros prestados.
+✓ Cantidad de libros por género.
+✓ Libro más antiguo y más nuevo
+*/
+
+const generarReporteLibros = () => {
+    // Cantidad total de libros
+    const totalLibros = libros.length;
+    // Cantidad de libros prestados (no disponibles)
+    const librosPrestados = libros.filter(libro => !libro.disponible).length;
+    // Cantidad de libros por género
+    const librosPorGenero = libros.reduce((acc, libro) => {
+        acc[libro.genero] = (acc[libro.genero] || 0) + 1;
+        return acc;
+    }, {});
+    // Libro más antiguo y más nuevo
+    const libroMasAntiguo = libros.reduce((antiguo, libro) => (libro.anio < antiguo.anio ? libro : antiguo), libros[0]);
+    const libroMasNuevo = libros.reduce((nuevo, libro) => (libro.anio > nuevo.anio ? libro : nuevo), libros[0]);
+    console.log("Reporte de Libros:");
+    console.log(`Cantidad total de libros: ${totalLibros}`);
+    console.log(`Cantidad de libros prestados: ${librosPrestados}`);
+    console.log("Cantidad de libros por género:", librosPorGenero);
+    console.log(`Libro más antiguo: "${libroMasAntiguo.titulo}" (${libroMasAntiguo.anio})`);
+    console.log(`Libro más nuevo: "${libroMasNuevo.titulo}" (${libroMasNuevo.anio})`);
+}
+
+
