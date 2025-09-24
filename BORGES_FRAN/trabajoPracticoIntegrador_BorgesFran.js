@@ -421,3 +421,52 @@ const librosConPalabrasEnTitulo = () => {
     return titulos;
 }
 
+/* 
+------------------------------
+CÁLCULOS ESTADÍSTICOS
+------------------------------
+*/
+
+/*
+a) Desarrollar una función calcularEstadisticas() que utilice el objeto
+Math para calcular y mostrar:
+✓ Promedio de años de publicación de los libros.
+✓ Año de publicación más frecuente.
+✓ Diferencia en años entre el libro más antiguo y el más nuevo.
+*/
+const calcularEstadisticas = () => {
+    const aniosPublicacion = libros.map(libro => libro.anio);
+
+    // Promedio de años de publicación
+    const sumaAniosPublicacion = aniosPublicacion.reduce((acum, anio) => acum + anio, 0);
+    const promedioAniosPublicacion = Math.round(sumaAniosPublicacion / aniosPublicacion.length);
+
+    // Año más frecuente de publicación
+    let frecuencias = {}; // Objeto para contar cuántas veces aparece cada año
+    let anioMasFrecuente = aniosPublicacion[0]; // Guardará el año más repetido
+    let maxFrecuencia = 0; // Guardará cuántas veces se repite ese año
+
+    aniosPublicacion.forEach(anio => {
+        // Si el año no está en el objeto, lo inicializamos en 0 y luego sumamos 1
+        frecuencias[anio] = (frecuencias[anio] || 0) + 1;
+
+        // Si este año ahora tiene más frecuencia que el máximo conocido, lo actualizamos
+        if (frecuencias[anio] > maxFrecuencia) {
+            maxFrecuencia = frecuencias[anio];
+            anioMasFrecuente = anio;
+        }
+    });
+
+    //Diferencia en años entre el libro más antiguo y el más nuevo
+    const anioMasAntiguo = Math.min(...aniosPublicacion);
+    const anioMasNuevo = Math.max(...aniosPublicacion);
+    const diferenciaAnios = anioMasNuevo - anioMasAntiguo;
+
+    // Mostrar resultados en consola
+    console.log("📊 Estadísticas de Libros:");
+    console.log(`Promedio de años de publicación: ${promedioAniosPublicacion}`);
+    console.log(`Año de publicación más frecuente: ${anioMasFrecuente}`);
+    console.log(`Libro más antiguo publicado en: ${anioMasAntiguo}`);
+    console.log(`Libro más nuevo publicado en: ${anioMasNuevo}`);
+    console.log(`Diferencia entre el más antiguo y el más nuevo: ${diferenciaAnios} años`);
+}
