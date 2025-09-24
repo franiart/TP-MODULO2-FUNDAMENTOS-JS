@@ -470,3 +470,37 @@ const calcularEstadisticas = () => {
     console.log(`Libro más nuevo publicado en: ${anioMasNuevo}`);
     console.log(`Diferencia entre el más antiguo y el más nuevo: ${diferenciaAnios} años`);
 }
+
+/*
+------------------------------
+MANEJO DE CADENAS
+------------------------------
+*/
+
+/*
+a) Crear una función normalizarDatos() que utilice métodos de strings
+para:
+✓ Convertir todos los títulos a mayúsculas.
+✓ Eliminar espacios en blanco al inicio y final de los nombres de
+autores.
+✓ Formatear los emails de los usuarios a minúsculas.
+*/
+
+const normalizarDatos = () => {
+    // Convertir todos los títulos a mayúsculas
+    libros.forEach(libro => {
+        libro.titulo = libro.titulo.toUpperCase();
+    });
+    // Eliminar espacios en blanco al inicio y final de los nombres de autores
+    libros.forEach(libro => {
+        libro.autor = libro.autor.trim();
+    });
+    // Formatear los emails de los usuarios a minúsculas
+    usuarios.forEach(usuario => {
+        usuario.email = usuario.email.toLowerCase();
+    });
+    console.log("Datos normalizados exitosamente");
+    console.table(libros);
+    console.table(usuarios);
+}
+
