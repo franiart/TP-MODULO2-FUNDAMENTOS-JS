@@ -390,4 +390,34 @@ const generarReporteLibros = () => {
     console.log(`Libro más nuevo: "${libroMasNuevo.titulo}" (${libroMasNuevo.anio})`);
 }
 
+/*
+------------------------------
+IDENTIFICACIÓN AVANZADA DE LIBROS
+------------------------------
+*/
+
+/*
+a) Implementar una función librosConPalabrasEnTitulo() que identifique
+y muestre todos los libros cuyo título contiene más de una palabra
+(no títulos que contengan números ni otros caracteres).
+b) La función debe devolver un array con los títulos de esos libros y
+mostrarlo en la consola.
+*/
+const librosConPalabrasEnTitulo = () => {
+    const titulosLibros =  libros.filter(libro => {
+        const titulo = libro.titulo;
+
+        // Removemos los caracteres especiales
+        const sinCaracteresEspeciales =  titulo.match(/^[a-zA-Z\s]+$/g);
+
+        // Dividimos cada título en palabras
+        const palabras = titulo.split(' ');
+
+        // Retorna los títulos que no contengan caracteres especiales y que contengan más de una palabra
+        return sinCaracteresEspeciales && palabras.length > 1;
+});
+    const titulos = titulosLibros.map(libro => libro.titulo);
+    console.log("Libros con más de una palabra en el título:", titulos);
+    return titulos;
+}
 
